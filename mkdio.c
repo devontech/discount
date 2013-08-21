@@ -87,6 +87,8 @@ header_dle(Line *p)
  */
 typedef int (*getc_func)(void*);
 
+Document *populate(getc_func getc, void* ctx, int flags);  // Prototype
+
 Document *
 populate(getc_func getc, void* ctx, int flags)
 {
@@ -203,6 +205,8 @@ mkd_generatehtml(Document *p, FILE *output)
 
 /* convert some markdown text to html
  */
+int markdown(Document *document, FILE *out, int flags);  // Prototype
+
 int
 markdown(Document *document, FILE *out, int flags)
 {
@@ -269,7 +273,7 @@ mkd_line(char *bfr, int size, char **res, DWORD flags)
     
     mkd_parse_line(bfr, size, &f, flags);
 
-    if ( len = S(f.out) ) {
+    if ( (len = S(f.out)) ) {
 	/* kludge alert;  we know that T(f.out) is malloced memory,
 	 * so we can just steal it away.   This is awful -- there
 	 * should be an opaque method that transparently moves 
@@ -307,8 +311,14 @@ mkd_generateline(char *bfr, int size, FILE *output, DWORD flags)
 }
 
 
+void mkd_e_url(Document *f, mkd_callback_t edit);  // Prototypes
+void mkd_e_flags(Document *f, mkd_callback_t edit);
+void mkd_e_free(Document *f, mkd_free_t dealloc);
+void mkd_e_data(Document *f, void *data);
+
 /* set the url display callback
  */
+
 void
 mkd_e_url(Document *f, mkd_callback_t edit)
 {

@@ -2,8 +2,10 @@
  */
 #include "tags.h"
 
+void mkd_with_html5_tags(void);  // Prototype
+
 void
-mkd_with_html5_tags()
+mkd_with_html5_tags(void)
 {
     static int populated = 0;
 

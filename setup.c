@@ -20,20 +20,19 @@
     
 static int need_to_initrng = 1;
 
-void
-mkd_initialize()
-{
+void mkd_initialize(void);
+void mkd_shlib_destructor(void);
 
-    if ( need_to_initrng ) {
-	need_to_initrng = 0;
-	INITRNG(time(0));
+void mkd_initialize(void)
+{
+    if ( need_to_initrng )
+	{
+		need_to_initrng = 0;
+		INITRNG(time(0));
     }
 }
 
-
-void
-mkd_shlib_destructor()
+void mkd_shlib_destructor(void)
 {
     mkd_deallocate_tags();
 }
-
